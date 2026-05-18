@@ -1,6 +1,6 @@
 {
-    "name": "aution_bidding",
-    "short_name": "aution_bidding",
+    "name": "auction",
+    "short_name": "auction",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
