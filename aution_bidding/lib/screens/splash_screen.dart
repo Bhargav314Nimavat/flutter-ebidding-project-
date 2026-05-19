@@ -81,7 +81,7 @@ class _SplashScreenState extends State<SplashScreen> {
               fit: BoxFit.contain,
             ),
           ),
-
+  
           const SizedBox(height: 20),
 
           /// TITLE
