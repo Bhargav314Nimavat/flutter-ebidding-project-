@@ -5,10 +5,10 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = aution_bidding
+PRODUCT_NAME = auction
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.autionBidding
+PRODUCT_BUNDLE_IDENTIFIER = com.example.auction
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2026 com.example. All rights reserved.
