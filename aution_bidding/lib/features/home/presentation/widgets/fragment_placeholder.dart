@@ -7,18 +7,22 @@ class FragmentPlaceholder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Navigator(
+    return Navigator(
       onGenerateRoute: (settings) {
-        switch(settings.name) {
+        switch (settings.name) {
           case '/':
-            return MaterialPageRoute(builder: (context) => const OfferPointHomeScreen());
+            return MaterialPageRoute(
+              builder: (context) => const OfferPointHomeScreen(),
+            );
 
           case '/addbidding':
-            return MaterialPageRoute(builder: (context) => const AddBidding());
+            return MaterialPageRoute(
+              builder: (context) => const AddBidding(),
+            );
           default:
             return null;
         }
       },
     );
   }
-}
+}
