@@ -1,6 +1,15 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
+void main() {
+  runApp(
+    const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: SplashScreen(),
+    ),
+  );
+}
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -9,6 +18,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
   @override
   void initState() {
     super.initState();
@@ -16,13 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(
       const Duration(seconds: 3),
       () {
-        // Navigate to next screen
-        // Navigator.pushReplacement(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => const HomeScreen(),
-        //   ),
-        // );
+        // Navigate Here
       },
     );
   }
@@ -30,145 +34,96 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
+      backgroundColor: Colors.black,
 
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color(0xff001B5E),
-              Color(0xff0039A6),
-              Color(0xff001B5E),
-            ],
-          ),
-        ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
 
-        child: Stack(
-          children: [
+          child: Column(
+            children: [
 
-            /// WORLD MAP BACKGROUND EFFECT
-            Positioned(
-              bottom: 80,
-              left: -20,
-              right: -20,
-              child: Opacity(
-                opacity: 0.08,
-                child: Icon(
-                  Icons.public,
-                  size: 350,
-                  color: Colors.white,
+              /// MAIN CENTER
+              Expanded(
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+
+                      /// LOGO
+                      Container(
+                        height: 170,
+                        width: 170,
+
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white10,
+                          border: Border.all(
+                            color: Colors.white24,
+                            width: 2,
+                          ),
+                        ),
+
+                        child: Padding(
+                          padding: const EdgeInsets.all(28),
+
+                          child: Image.asset(
+                            "assets/images/logo.png",
+                            fit: BoxFit.contain,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 30),
+
+                      /// TITLE
+                      const Text(
+                        "BANKMATE",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 38,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 2,
+                        ),
+                      ),
+
+                      const SizedBox(height: 12),
+
+                      /// SUBTITLE
+                      const Text(
+                        "Mortgage Bidding System",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: 18,
+                        ),
+                      ),
+
+                      const SizedBox(height: 40),
+
+                      /// LOADER
+                      const SizedBox(
+                        height: 35,
+                        width: 35,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 3,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
 
-            /// MAIN CONTENT
-          SafeArea(
-  child: SingleChildScrollView(
-    child: SizedBox(
-      height: MediaQuery.of(context).size.height - 40,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-
-          /// LOGO
-          SizedBox(
-            height: 150,
-            width: 150,
-            child: Image.asset(
-              "assets/images/logo.png",
-              fit: BoxFit.contain,
-            ),
-          ),
-  
-          const SizedBox(height: 20),
-
-          /// TITLE
-          const Text(
-            "BANKMATE",
-            style: TextStyle(
-              fontSize: 42,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-
-          const SizedBox(height: 8),
-
-          const Text(
-            "MORTGAGE BIDDING SYSTEM",
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.white70,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-
-          const SizedBox(height: 60),
-
-          /// LOADER
-          const SizedBox(
-            height: 80,
-            width: 80,
-            child: CircularProgressIndicator(
-              strokeWidth: 6,
-              backgroundColor: Colors.white24,
-              valueColor: AlwaysStoppedAnimation(
-                Colors.greenAccent,
-              ),
-            ),
-          ),
-
-          const SizedBox(height: 25),
-
-          const Text(
-            "Preparing Your Experience...",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-            ),
-          ),
-
-          const Spacer(),
-
-          /// VERSION
-          const Text(
-            "Version 1.0.0",
-            style: TextStyle(
-              color: Colors.white70,
-              fontSize: 14,
-            ),
-          ),
-
-          SizedBox(height: 5),
-
-          const Text(
-            "© 2026 BankMate",
-            style: TextStyle(
-              color: Colors.white54,
-              fontSize: 12,
-            ),
-          ),
-
-          SizedBox(height: 20),
-        ],
-      ),
-    ),
-  ),
-),
-            /// VERSION
-            const Positioned(
-              bottom: 40,
-              left: 0,
-              right: 0,
-              child: Column(
+              /// BOTTOM TEXT
+              const Column(
                 children: [
 
                   Text(
                     "Version 1.0.0",
                     style: TextStyle(
-                      color: Colors.white70,
+                      color: Colors.white54,
                       fontSize: 14,
                     ),
                   ),
@@ -178,14 +133,14 @@ class _SplashScreenState extends State<SplashScreen> {
                   Text(
                     "© 2026 BankMate",
                     style: TextStyle(
-                      color: Colors.white54,
+                      color: Colors.white38,
                       fontSize: 12,
                     ),
                   ),
                 ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
