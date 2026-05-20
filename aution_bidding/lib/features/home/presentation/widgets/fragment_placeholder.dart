@@ -1,10 +1,24 @@
 import 'package:flutter/material.dart';
+import '../pages/addbiddin.dart';
+import '../pages/offer_point_home_screen.dart';
 
 class FragmentPlaceholder extends StatelessWidget {
   const FragmentPlaceholder({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return  Navigator(
+      onGenerateRoute: (settings) {
+        switch(settings.name) {
+          case '/':
+            return MaterialPageRoute(builder: (context) => const OfferPointHomeScreen());
+
+          case '/addbidding':
+            return MaterialPageRoute(builder: (context) => const AddBidding());
+          default:
+            return null;
+        }
+      },
+    );
   }
 }
