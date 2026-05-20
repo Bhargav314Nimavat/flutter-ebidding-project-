@@ -1,9 +1,7 @@
 import 'dart:ui';
-import 'package:auction/features/home/presentation/pages/addbiddin.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/bidding_card.dart';
-import '../widgets/search_filter_bar.dart';
 
 class OfferPointHomeScreen extends StatelessWidget {
   const OfferPointHomeScreen({super.key});
@@ -111,7 +109,9 @@ class OfferPointHomeScreen extends StatelessWidget {
                               ),
                               const SizedBox(width: 16),
                               _AddBiddingButton(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.pushNamed(context, '/addbidding');
+                                },
                               ),
                             ],
                           ),
