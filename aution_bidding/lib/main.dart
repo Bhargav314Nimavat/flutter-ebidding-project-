@@ -1,28 +1,16 @@
 import 'package:flutter/material.dart';
-
-import 'screens/splash_screen.dart';
+import 'features/home/presentation/widgets/fragment_placeholder.dart';
 
 void main() {
-  runApp(const BidSyncApp());
+  runApp(MyApp());
 }
 
-class BidSyncApp extends StatelessWidget {
-  const BidSyncApp({super.key});
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'BidSync',
-      theme: ThemeData(
-        useMaterial3: true,
-        brightness: Brightness.light,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF0057B8),
-          brightness: Brightness.light,
-        ),
-      ),
-      home: const SplashScreen(),
+      home: FragmentPlaceholder(),
     );
   }
 }

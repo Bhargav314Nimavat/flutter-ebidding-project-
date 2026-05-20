@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:auction/features/home/presentation/pages/addbiddin.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/bidding_card.dart';
@@ -116,7 +117,6 @@ class OfferPointHomeScreen extends StatelessWidget {
                             ],
                           ),
                           const SizedBox(height: 24),
-                          const SearchFilterBar(),
                           const SizedBox(height: 24),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -216,9 +216,14 @@ class _AddBiddingButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(20),
+      child: InkWell(  
+        onTap: (){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AddBidding())  
+          );
+        },
+        borderRadius: BorderRadius.circular(8),
         child: Ink(
           decoration: BoxDecoration(
             gradient: const LinearGradient(
@@ -229,14 +234,7 @@ class _AddBiddingButton extends StatelessWidget {
                 Color(0xFF0F131A),
               ],
             ),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: Colors.black.withOpacity(0.35),
-                blurRadius: 22,
-                offset: const Offset(0, 12),
-              ),
-            ],
+            borderRadius: BorderRadius.circular(8),
             border: Border.all(
               color: Colors.white.withOpacity(0.08),
             ),
