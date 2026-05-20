@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import '../pages/addbiddin.dart';
 import '../pages/offer_point_home_screen.dart';
 
-class FragmentPlaceholder extends StatelessWidget {
+class FragmentPlaceholder extends StatefulWidget {
   const FragmentPlaceholder({super.key});
 
+  @override
+  State<FragmentPlaceholder> createState() => _FragmentPlaceholderState();
+}
+
+class _FragmentPlaceholderState extends State<FragmentPlaceholder> {
   @override
   Widget build(BuildContext context) {
     return  Navigator(
