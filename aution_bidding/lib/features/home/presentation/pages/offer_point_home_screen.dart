@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:auction/features/home/presentation/pages/addbiddin.dart';
 import 'package:flutter/material.dart';
 
@@ -218,10 +217,7 @@ class _AddBiddingButton extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(  
         onTap: (){
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const AddBidding())  
-          );
+          Navigator.pushNamed(context, '/addbidding');
         },
         borderRadius: BorderRadius.circular(8),
         child: Ink(
