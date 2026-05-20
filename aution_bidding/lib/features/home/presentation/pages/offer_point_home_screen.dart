@@ -1,69 +1,43 @@
+<<<<<<< HEAD
 import 'dart:ui';
 import 'package:auction/features/home/presentation/pages/addbiddin.dart';
 import 'package:flutter/material.dart';
+=======
+import 'package:flutter/material.dart';
+import 'package:auction/features/home/presentation/bidding_manager.dart';
+
+
+>>>>>>> 1ee7ac50d07585c8195261b9408624f48003b329
 import '../widgets/bidding_card.dart';
 
-class OfferPointHomeScreen extends StatelessWidget {
+class OfferPointHomeScreen extends StatefulWidget {
   const OfferPointHomeScreen({super.key});
 
-  // Static demo data keeps the screen fully local and deterministic for now.
-  static const List<BiddingListing> _listings = <BiddingListing>[
-    BiddingListing(
-      title: 'Office Interior Design',
-      description:
-          'Modern workspace revamp for a growing tech team with modular zones and warm materials.',
-      budget: 'AED 48,000',
-      deadline: 'Due in 4 days',
-      bidsReceived: 12,
-      category: 'Interior',
-      status: 'Open',
-      isClosed: false,
-    ),
-    BiddingListing(
-      title: 'Bulk T-Shirt Printing',
-      description:
-          'Premium cotton shirts for a campaign launch with screen printing and fast delivery.',
-      budget: 'AED 8,500',
-      deadline: 'Due in 2 days',
-      bidsReceived: 9,
-      category: 'Printing',
-      status: 'Open',
-      isClosed: false,
-    ),
-    BiddingListing(
-      title: 'Catering Service for Event',
-      description:
-          'Curated dining experience for 120 guests with canapés, live stations, and service staff.',
-      budget: 'AED 22,000',
-      deadline: 'Due tomorrow',
-      bidsReceived: 16,
-      category: 'Hospitality',
-      status: 'Closed',
-      isClosed: true,
-    ),
-    BiddingListing(
-      title: 'Mobile App UI Design',
-      description:
-          'Luxury fintech interface concept with refined visual hierarchy and reusable design system.',
-      budget: 'AED 14,500',
-      deadline: 'Due in 6 days',
-      bidsReceived: 7,
-      category: 'Design',
-      status: 'Open',
-      isClosed: false,
-    ),
-    BiddingListing(
-      title: 'Website Development',
-      description:
-          'Conversion-focused corporate website with responsive layouts, performance tuning, and CMS readiness.',
-      budget: 'AED 35,000',
-      deadline: 'Due in 8 days',
-      bidsReceived: 21,
-      category: 'Development',
-      status: 'Open',
-      isClosed: false,
-    ),
-  ];
+  @override
+  State<OfferPointHomeScreen> createState() => _OfferPointHomeScreenState();
+}
+
+class _OfferPointHomeScreenState extends State<OfferPointHomeScreen> {
+  final BiddingManager _biddingManager = BiddingManager();
+
+  @override
+  void initState() {
+    super.initState();
+    _biddingManager.addListener(_onListingsChanged);
+  }
+
+  @override
+  void dispose() {
+    _biddingManager.removeListener(_onListingsChanged);
+    super.dispose();
+  }
+
+  void _onListingsChanged() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +83,7 @@ class OfferPointHomeScreen extends StatelessWidget {
                               ),
                               const SizedBox(width: 16),
                               _AddBiddingButton(
-                                onTap: () {},
+                                onTap: () {Navigator.pushNamed(context, '/addbidding');},
                               ),
                             ],
                           ),
@@ -129,9 +103,9 @@ class OfferPointHomeScreen extends StatelessWidget {
                                     ),
                               ),
                               Text(
-                                '${_listings.length} listings',
-                                style: TextStyle(
-                                  color: const Color(0xFF5D6878),
+                                '${_biddingManager.listings.length} listings',
+                                style: const TextStyle(
+                                  color: Color(0xFF5D6878),
                                   fontSize: 13,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -151,18 +125,19 @@ class OfferPointHomeScreen extends StatelessWidget {
                     ),
                     // The list is built from static data using a scalable card widget.
                     sliver: SliverList.builder(
-                      itemCount: _listings.length,
+                      itemCount: _biddingManager.listings.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 18),
                           child: BiddingCard(
-                            listing: _listings[index],
+                            listing: _biddingManager.listings[index],
                             animationDelay: index * 90,
                           ),
                         );
                       },
                     ),
                   ),
+
                 ],
               );
             },
@@ -215,10 +190,7 @@ class _AddBiddingButton extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(  
         onTap: (){
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const AddBidding())  
-          );
+          Navigator.pushNamed(context, '/addbidding');
         },
         borderRadius: BorderRadius.circular(8),
         child: Ink(
