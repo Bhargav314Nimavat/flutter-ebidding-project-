@@ -1,13 +1,11 @@
-<<<<<<< HEAD
 import 'dart:ui';
 import 'package:auction/features/home/presentation/pages/addbiddin.dart';
 import 'package:flutter/material.dart';
-=======
 import 'package:flutter/material.dart';
 import 'package:auction/features/home/presentation/bidding_manager.dart';
 
 
->>>>>>> 1ee7ac50d07585c8195261b9408624f48003b329
+
 import '../widgets/bidding_card.dart';
 
 class OfferPointHomeScreen extends StatefulWidget {
