@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import '../models/bidding_listing.dart';
 import 'widgets/bidding_card.dart';
 
 class BiddingManager extends ChangeNotifier {

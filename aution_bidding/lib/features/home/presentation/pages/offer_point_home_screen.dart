@@ -1,41 +1,20 @@
-import 'dart:ui';
-import 'package:auction/features/home/presentation/pages/addbiddin.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:auction/features/home/presentation/bidding_manager.dart';
-
-
-
+import 'package:auction/features/home/models/bidding_listing.dart';
 import '../widgets/bidding_card.dart';
 
-class OfferPointHomeScreen extends StatefulWidget {
-  const OfferPointHomeScreen({super.key});
+class OfferPointHomeScreen extends StatelessWidget {
+  final List<BiddingListing> listings;
+  final void Function(BiddingListing) onAdd;
+  final void Function(BiddingListing) onRemove;
+  final void Function(BiddingListing) onUpdate;
 
-  @override
-  State<OfferPointHomeScreen> createState() => _OfferPointHomeScreenState();
-}
-
-class _OfferPointHomeScreenState extends State<OfferPointHomeScreen> {
-  final BiddingManager _biddingManager = BiddingManager();
-
-  @override
-  void initState() {
-    super.initState();
-    _biddingManager.addListener(_onListingsChanged);
-  }
-
-  @override
-  void dispose() {
-    _biddingManager.removeListener(_onListingsChanged);
-    super.dispose();
-  }
-
-  void _onListingsChanged() {
-    if (mounted) {
-      setState(() {});
-    }
-  }
-
+  const OfferPointHomeScreen({
+    super.key,
+    required this.listings,
+    required this.onAdd,
+    required this.onRemove,
+    required this.onUpdate,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +40,6 @@ class _OfferPointHomeScreenState extends State<OfferPointHomeScreen> {
 
               return CustomScrollView(
                 slivers: <Widget>[
-                  // Top content keeps the title, CTA, and search area grouped together.
                   SliverPadding(
                     padding: EdgeInsets.fromLTRB(
                       horizontalPadding,
@@ -81,11 +59,12 @@ class _OfferPointHomeScreenState extends State<OfferPointHomeScreen> {
                               ),
                               const SizedBox(width: 16),
                               _AddBiddingButton(
-                                onTap: () {Navigator.pushNamed(context, '/addbidding');},
+                                onTap: () {
+                                  Navigator.pushNamed(context, '/addbidding');
+                                },
                               ),
                             ],
                           ),
-                          const SizedBox(height: 24),
                           const SizedBox(height: 24),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -101,7 +80,7 @@ class _OfferPointHomeScreenState extends State<OfferPointHomeScreen> {
                                     ),
                               ),
                               Text(
-                                '${_biddingManager.listings.length} listings',
+                                '${listings.length} listings',
                                 style: const TextStyle(
                                   color: Color(0xFF5D6878),
                                   fontSize: 13,
@@ -121,21 +100,27 @@ class _OfferPointHomeScreenState extends State<OfferPointHomeScreen> {
                       horizontalPadding,
                       28,
                     ),
-                    // The list is built from static data using a scalable card widget.
                     sliver: SliverList.builder(
-                      itemCount: _biddingManager.listings.length,
+                      itemCount: listings.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 18),
                           child: BiddingCard(
-                            listing: _biddingManager.listings[index],
+                            listing: listings[index],
                             animationDelay: index * 90,
+                            onEdit: (listing) {
+                              Navigator.pushNamed(
+                                context,
+                                '/addbidding',
+                                arguments: listing,
+                              );
+                            },
+                            onDelete: onRemove,
                           ),
                         );
                       },
                     ),
                   ),
-
                 ],
               );
             },
@@ -186,10 +171,8 @@ class _AddBiddingButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
-      child: InkWell(  
-        onTap: (){
-          Navigator.pushNamed(context, '/addbidding');
-        },
+      child: InkWell(
+        onTap: onTap,
         borderRadius: BorderRadius.circular(8),
         child: Ink(
           decoration: BoxDecoration(
@@ -211,11 +194,7 @@ class _AddBiddingButton extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Icon(
-                  Icons.add_rounded,
-                  color: Colors.white,
-                  size: 20,
-                ),
+                Icon(Icons.add_rounded, color: Colors.white, size: 20),
                 SizedBox(width: 8),
                 Text(
                   'Add Bidding',

@@ -1,43 +1,21 @@
 import 'package:flutter/material.dart';
-import '../bidding_manager.dart';
-import '../pages/addbiddin.dart';
-
-class BiddingListing {
-  const BiddingListing({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.budget,
-    required this.deadline,
-    required this.bidsReceived,
-    required this.category,
-    required this.status,
-    required this.isClosed,
-  });
-
-  final String id;
-  final String title;
-  final String description;
-  final String budget;
-  final String deadline;
-  final int bidsReceived;
-  final String category;
-  final String status;
-  final bool isClosed;
-}
-
+import '../../models/bidding_listing.dart';
 
 class BiddingCard extends StatelessWidget {
   const BiddingCard({
     super.key,
     required this.listing,
     required this.animationDelay,
+    required this.onEdit,
+    required this.onDelete,
   });
 
   final BiddingListing listing;
   final int animationDelay;
+  final void Function(BiddingListing) onEdit;
+  final void Function(BiddingListing) onDelete;
 
-  void _confirmDelete(BuildContext context, String id) {
+  void _confirmDelete(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -58,13 +36,16 @@ class BiddingCard extends StatelessWidget {
               onPressed: () => Navigator.pop(context),
               child: Text(
                 'Cancel',
-                style: TextStyle(color: Colors.grey.shade600, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                  color: Colors.grey.shade600,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
             ElevatedButton(
               onPressed: () {
-                BiddingManager().deleteListing(id);
-                Navigator.pop(context); // Close dialog
+                Navigator.pop(context); // Close dialog first
+                onDelete(listing);      // Then call parent's delete
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text('Bidding listing deleted successfully.'),
@@ -81,7 +62,10 @@ class BiddingCard extends StatelessWidget {
               ),
               child: const Text(
                 'Delete',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ],
@@ -90,25 +74,12 @@ class BiddingCard extends StatelessWidget {
     );
   }
 
-  void _editBidding(BuildContext context, BiddingListing listing) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => AddBidding(listingToEdit: listing),
-      ),
-    );
-  }
-
-
   @override
   Widget build(BuildContext context) {
-    final BiddingListing listing = this.listing;
     final bool isClosed = listing.isClosed;
-    final Color statusColor = isClosed
-        ? const Color(0xFFB08968)
-        : const Color(0xFF4F7D5F);
+    final Color statusColor =
+        isClosed ? const Color(0xFFB08968) : const Color(0xFF4F7D5F);
 
-    // Modern card design with interactive ripples and navigation
     return Card(
       elevation: 0,
       margin: EdgeInsets.zero,
@@ -142,11 +113,13 @@ class BiddingCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                   decoration: BoxDecoration(
                     color: statusColor.withOpacity(0.10),
                     borderRadius: BorderRadius.circular(6),
-                    border: Border.all(color: statusColor.withOpacity(0.22)),
+                    border:
+                        Border.all(color: statusColor.withOpacity(0.22)),
                   ),
                   child: Text(
                     listing.status,
@@ -241,22 +214,24 @@ class BiddingCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton.icon(
-                  onPressed: () => _editBidding(context, listing),
+                  onPressed: () => onEdit(listing),  // calls parent's onEdit
                   icon: const Icon(Icons.edit_outlined, size: 16),
                   label: const Text('Modify'),
                   style: TextButton.styleFrom(
                     foregroundColor: const Color(0xFF1E293B),
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   ),
                 ),
                 const SizedBox(width: 12),
                 TextButton.icon(
-                  onPressed: () => _confirmDelete(context, listing.id),
+                  onPressed: () => _confirmDelete(context), // shows dialog, then calls parent's onDelete
                   icon: const Icon(Icons.delete_outline, size: 16),
                   label: const Text('Delete'),
                   style: TextButton.styleFrom(
                     foregroundColor: Colors.redAccent,
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   ),
                 ),
               ],
@@ -267,4 +242,3 @@ class BiddingCard extends StatelessWidget {
     );
   }
 }
-
